@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Department of Residential Sanitation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      font-family: "Times New Roman", serif;
+      background-color: #f4f4f4;
+      margin: 0;
+    }
+
+    header {
+      background: #0b3d91;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      background: white;
+      padding: 25px;
+      border: 1px solid #ccc;
+    }
+
+    h2 {
+      border-bottom: 2px solid #0b3d91;
+      padding-bottom: 5px;
+    }
+
+    .notice {
+      background: #e8f0fe;
+      border-left: 6px solid #0b3d91;
+      padding: 15px;
+      margin: 20px 0;
+      font-size: 14px;
+    }
+
+    iframe {
+      width: 100%;
+      height: 750px;
+      border: none;
+    }
+
+    button {
+      padding: 12px 20px;
+      font-size: 14px;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+
+    .review-box {
+      display: none;
+      margin-top: 30px;
+      padding: 20px;
+      border: 2px dashed #333;
+      background: #fafafa;
+      text-align: center;
+    }
+
+    .countdown {
+      font-size: 26px;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    .certificate {
+      display: none;
+      margin-top: 40px;
+      padding: 30px;
+      border: 6px double black;
+      text-align: center;
+      background: #fffdf5;
+    }
+
+    .seal {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 6px solid #0b3d91;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 50px;
+      margin: 20px auto;
+      background: #e8f0fe;
+    }
+
+    .qr-section {
+      margin-top: 40px;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    footer {
+      margin-top: 40px;
+      font-size: 12px;
+      text-align: center;
+      color: #666;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>Department of Residential Sanitation</h1>
+  <p>Official Government Bathroom Access Portal</p>
+</header>
+
+<div class="container">
+  <h2>Toilet Usage Application</h2>
+
+  <div class="notice">
+    Completion of Form DRS-104B is mandatory.  
+    Processing time varies based on urgency, vibes, and vibes alone.
+  </div>
+
+  <!-- EMBEDDED GOOGLE FORM -->
+  <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdVP5IsrwR0_leOct1Vk_1pfD6EJD7V-oKfzXvDh8S4_VCslA/viewform"></iframe>
+
+  <div style="text-align:center;">
+    <button onclick="startReview()">I Have Submitted My Application</button>
+  </div>
+
+  <!-- REVIEW PROCESS -->
+  <div class="review-box" id="reviewBox">
+    🕵️‍♂️ <strong>Application Under Federal Review</strong>
+    <p>Please remain still.</p>
+    <div class="countdown" id="countdown">00:20</div>
+  </div>
+
+  <!-- CERTIFICATE -->
+  <div class="certificate" id="certificate">
+    <h2>Certificate of Approval</h2>
+    <p>This document certifies that the bearer has been</p>
+    <h1>APPROVED</h1>
+    <p>for temporary restroom access</p>
+
+    <div class="seal">🦅</div>
+
+    <p>
+      Authorized by the<br>
+      <strong>Department of Residential Sanitation</strong>
+    </p>
+
+    <button onclick="downloadPDF()">Download Official PDF Certificate</button>
+  </div>
+
+  <!-- QR CODE -->
+  <div class="qr-section">
+    <h3>Scan to Apply</h3>
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://docs.google.com/forms/d/e/1FAIpQLSdVP5IsrwR0_leOct1Vk_1pfD6EJD7V-oKfzXvDh8S4_VCslA/viewform">
+  </div>
+
+  <footer>
+    © 2026 Department of Residential Sanitation<br>
+    “Flush Responsibility Is Civic Duty”
+  </footer>
+</div>
+
+<!-- APPROVAL SOUND -->
+<audio id="approvalSound">
+  <source src="https://www.soundjay.com/buttons/sounds/button-3.mp3" type="audio/mpeg">
+</audio>
+
+<!-- jsPDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script>
+  function startReview() {
+    const reviewBox = document.getElementById("reviewBox");
+    const countdown = document.getElementById("countdown");
+    const cert = document.getElementById("certificate");
+    const sound = document.getElementById("approvalSound");
+
+    reviewBox.style.display = "block";
+    cert.style.display = "none";
+
+    let time = 20;
+    const timer = setInterval(() => {
+      time--;
+      countdown.textContent = "00:" + (time < 10 ? "0" + time : time);
+
+      if (time <= 0) {
+        clearInterval(timer);
+        reviewBox.style.display = "none";
+        cert.style.display = "block";
+        sound.play();
+      }
+    }, 1000);
+  }
+
+  function downloadPDF() {
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF();
+
+    pdf.setFont("Times", "Bold");
+    pdf.setFontSize(20);
+    pdf.text("Department of Residential Sanitation", 105, 25, { align: "center" });
+
+    pdf.setLineWidth(1);
+    pdf.line(20, 30, 190, 30);
+
+    pdf.setFontSize(18);
+    pdf.text("Certificate of Approval", 105, 50, { align: "center" });
+
+    pdf.setFont("Times", "Normal");
+    pdf.setFontSize(12);
+    pdf.text("This certifies that the bearer has been", 105, 70, { align: "center" });
+
+    pdf.setFont("Times", "Bold");
+    pdf.setFontSize(24);
+    pdf.text("APPROVED", 105, 90, { align: "center" });
+
+    pdf.setFont("Times", "Normal");
+    pdf.setFontSize(12);
+    pdf.text("for temporary residential restroom access.", 105, 105, { align: "center" });
+
+    pdf.setFontSize(14);
+    pdf.text("🦅 OFFICIAL SEAL OF APPROVAL 🦅", 105, 130, { align: "center" });
+
+    pdf.setFontSize(10);
+    pdf.text(
+      "Issued by the Department of Residential Sanitation\nFlush with honor.",
+      105,
+      155,
+      { align: "center" }
+    );
+
+    pdf.text(
+      "Document ID: DRS-" + Math.floor(Math.random() * 1000000),
+      105,
+      175,
+      { align: "center" }
+    );
+
+    pdf.save("Toilet_Usage_Approval_Certificate.pdf");
+  }
+</script>
+
+</body>
+</html>
